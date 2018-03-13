@@ -6,7 +6,7 @@
 -->
 <html>
 <head>
-    <title>Directive by HTML5 UP</title>
+    <title>Meus Artistas Mais Ouvidos</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!--[if lte IE 8]><script src="assets/js/ie/html5shiv.js"></script><![endif]-->
@@ -20,9 +20,11 @@
 <!-- Header -->
 <div id="header">
     <span class="logo icon fa-spotify"></span>
-    <h1>My top 50</h1>
-    <p>Siempre que me preguntan qué tipo de música me gusta he querido responder algo distinto a "de todo" <br>
-        Hice está visualización a partir de mis 50 artistas favoritos para Spotify y quise explorar cómo se relacionan entre ellos
+    <h1>Meus Artistas Mais Ouvidos</h1>
+    <p>
+        Como atividade final do curso de visualização de dados, sugeriu-se a
+        adaptação dessa <a href="https://ss1993.github.io/my-spotify-top50/">visualização</a></br>
+        para refletir os meus 50 artistas mais ouvidos na plataforma do Spotify
     </p>
 </div>
 
@@ -31,10 +33,12 @@
 
     <div class="box container">
         <section>
-            <p>A continuación se presenta un grafo mostrando las relaciones mencionadas anteriormente.
-                Para resaltar por géneros deslice sus mouse encima de los géneros a la izquierda.
-                En cualquier momento puede deslizar también su mouse encima de un artista para ver con qué otros está relacionado más claramente.
-                Haga click encima de un artista para abrir su página de Spotify en una nueva pestaña.
+            <p>A seguir pode ser encontrada uma visualização mostrando os 50 artistas
+                mais ouvidos por mim no Spotify. De forma análoga ao que ocorre na
+                visualização original, é possível destacar os gêneros dos artistas
+                sobrevoando a legenda à esquerda. Também é possível ver quais artistas
+                estão relacionados passando o mouse sobre eles e um clique sobre
+                um artista abre sua página no Spotify.
             </p>
         </section>
         <section>
@@ -43,31 +47,36 @@
                     <filter id="greyscale">
                         <feColorMatrix
                                 type="matrix"
-                                values="0 1 0 0 0
-                  0 1 0 0 0
-                  0 1 0 0 0
-                  0 1 0 1 0 ">
+                                values=  "0 1 0 0 0
+                                          0 1 0 0 0
+                                          0 1 0 0 0
+                                          0 1 0 1 0 ">
                         </feColorMatrix>
                     </filter>
                 </defs>
             </svg>
         </section>
         <header>
-            <h2>Pharrell Williams, mi puente entre el Hip Hop y la electrónica</h2>
+            <h2>Dois grandes grupos sem ligações entre si</h2>
         </header>
         <section>
-            <h4>
-                De la visualización podemos concluir varias cosas sobre mis gustos músicales:
-            </h4>
             <ul class="default">
                 <li>
-                    Me gusta bastante varios subgéneros del Hip Hop y del House
+                    Meus gêneros favoritos são derivados do rock, do pop e da bossa nova
                 </li>
                 <li>
-                    Pharrell Williams es mi puente entre los dos géneros conectando al Pop con el Pop Rap.
+                    Há dois grandes grupos sem ligações entre si. Um deles comporta os artistas
+                    nacionais, enquanto o outro diz respeito aos artistas internacionais
                 </li>
                 <li>
-                    No salgo de muchos géneros; mi música está altamente conectada entre si.
+                    No grande grupo dos artistas internacionais é possível observar uma subdivisão
+                    entre os artistas pertencentes a subgêneros do rock e os artistas
+                    pertencentes a subgêneros do pop
+                </li>
+                <li>
+                    Dentro dos dois grupos principais, os artistas estão altamente conectados,
+                    mas também há artistas que não estão relacionados a nenhum outro, como
+                    <i>Scambo</i> e <i>Codinome Winchester</i>
                 </li>
 
             </ul>
@@ -86,7 +95,7 @@
         </ul>
 
         <ul class="copyright">
-            <li>&copy; Untitled. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+            <li>&copy; Baseado nessa <a href="https://ss1993.github.io/my-spotify-top50/">Visualização</a> </li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
         </ul>
 
     </div>

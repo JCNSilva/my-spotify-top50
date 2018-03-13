@@ -40,19 +40,26 @@ d3.json('meutop50.json', function (error, graph) {
                 "name":d.name,
                 "genres":d.genres,
                 "img":d.images[0].url,
-                "url":d.href
+                "url":d.external_urls.spotify
         };
     });
 
     gdata.edges = [];
-    for (node1 in gdata.nodes){
-        for(node2 in gdata.nodes){
+    var n_nodes = gdata.nodes.length;
+    for (var i = 0; i < n_nodes; i++){
+        for(var j = 0; j < n_nodes; j++){
+
+            var node1 = gdata.nodes[i];
+            var node2 = gdata.nodes[j];
             if(node1.id !== node2.id){
 
                 var match_found = false;
-                for(genre1 in node1.genres){
+                for(var k = 0; k < node1.genres.length; k++){
                     if(!match_found){
-                        for(genre2 in node2.genres){
+                        for(var l = 0; l < node2.genres.length; l++){
+
+                            var genre1 = node1.genres[k];
+                            var genre2 = node2.genres[l];
                             if(genre1 === genre2){
                                 var new_edge = {
                                     "source":node1.id,
@@ -60,17 +67,15 @@ d3.json('meutop50.json', function (error, graph) {
                                     "type":genre2
                                 };
                                 gdata.edges.push(new_edge);
+                                match_found = true;
+                                break;
                             }
-                            match_found = true;
-                            break;
                         }
                     }
                 }
             }
         }
     }
-
-    console.dir(gdata);
     /* DATA TREATMENT */
 
     const types = d3.set(gdata.edges.map(e => e.type)).values();
@@ -256,9 +261,9 @@ function dragged(d) {
 
 function genreX(n) {
     const genres = n.genres.join('-');
-    if (genres.includes('hip hop') || genres.includes('rap')) {
+    if (genres.includes('Mpb') || genres.includes('Bossa Nova')) {
         return width / 4 * 3;
-    } else if (genres.includes('house')) {
+    } else if (genres.includes('Modern Rock')) {
         return width / 4;
     } else {
         return width;
@@ -267,7 +272,7 @@ function genreX(n) {
 
 function genreY(n) {
     const genres = n.genres.join('-');
-    if (genres.length === 0 && !genres.includes('hip hop') && !genres.includes('rap') && genres.includes('house')) {
+    if (genres.length === 0 && !genres.includes('Mpb') && !genres.includes('Bossa Nova') && genres.includes('Modern Rock')) {
         return height / 4;
     } else {
         return height / 2;
