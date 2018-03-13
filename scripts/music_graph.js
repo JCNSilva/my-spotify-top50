@@ -28,10 +28,52 @@ const legend = d3.legendColor()
     .classPrefix('legend');
 
 
-d3.json('top50.json', function (error, graph) {
+d3.json('meutop50.json', function (error, graph) {
     if (error) throw error;
 
-    const types = d3.set(graph.edges.map(e => e.type)).values();
+    /* DATA TREATMENT */
+    var gdata = {};
+    gdata.nodes = graph.items;
+    gdata.nodes = gdata.nodes.map(function(d){
+        return {
+                "id":d.id,
+                "name":d.name,
+                "genres":d.genres,
+                "img":d.images[0].url,
+                "url":d.href
+        };
+    });
+
+    gdata.edges = [];
+    for (node1 in gdata.nodes){
+        for(node2 in gdata.nodes){
+            if(node1.id !== node2.id){
+
+                var match_found = false;
+                for(genre1 in node1.genres){
+                    if(!match_found){
+                        for(genre2 in node2.genres){
+                            if(genre1 === genre2){
+                                var new_edge = {
+                                    "source":node1.id,
+                                    "target":node2.id,
+                                    "type":genre2
+                                };
+                                gdata.edges.push(new_edge);
+                            }
+                            match_found = true;
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    console.dir(gdata);
+    /* DATA TREATMENT */
+
+    const types = d3.set(gdata.edges.map(e => e.type)).values();
     color.domain(types);
 
     legend
@@ -43,7 +85,7 @@ d3.json('top50.json', function (error, graph) {
 
             d3.selectAll('.node image')
                 .filter(n => {
-                   return graph.edges
+                   return gdata.edges
                        .filter(e => e.type === c)
                        .find(e => e.source.id === n.id || e.target.id === n.id) !== undefined;
                 })
@@ -70,7 +112,7 @@ d3.json('top50.json', function (error, graph) {
     const link = svg.append('g')
         .attr('class', 'links')
         .selectAll('line')
-        .data(graph.edges)
+        .data(gdata.edges)
         .enter()
         .append('line')
         .style('stroke', e => color(e.type))
@@ -88,7 +130,7 @@ d3.json('top50.json', function (error, graph) {
     const nodeGroup = svg.append('g')
         .attr('class', 'nodes')
         .selectAll('.node')
-        .data(graph.nodes)
+        .data(gdata.nodes)
         .enter()
         .append('g')
         .attr('class', 'node')
@@ -135,7 +177,7 @@ d3.json('top50.json', function (error, graph) {
 
             d3.selectAll('.legendlabel')
                 .filter(l => {
-                    return graph.edges
+                    return gdata.edges
                         .filter(e => e.source.id === d.id || e.target.id === d.id)
                         .map(e => e.type)
                         .includes(l);
@@ -178,11 +220,11 @@ d3.json('top50.json', function (error, graph) {
         .on('click', d => window.open(d.url));
 
     simulation
-        .nodes(graph.nodes)
+        .nodes(gdata.nodes)
         .on('tick', ticked);
 
     simulation.force('link')
-        .links(graph.edges);
+        .links(gdata.edges);
 
     function ticked() {
         link
@@ -195,7 +237,7 @@ d3.json('top50.json', function (error, graph) {
     }
 
     function isAdjacent(source, node) {
-        return graph.edges
+        return gdata.edges
             .filter(e => e.source.id === source.id || e.target.id === source.id)
             .find(e => e.target.id === node.id || e.source.id === node.id) !== undefined;
     }
